@@ -1,1 +1,33 @@
-<h1>This is View Data!</h1>
+<!DOCTYPE html>
+<html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<body>
+
+<canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+
+<script>
+const xValues = ["8-9:59 AM", "10-11:59 AM", "12-1:59 PM", "2-3:59 PM", "4-5:59 PM"];
+const yValues = [12, 32, 44, 24, 15];
+const barColors = ["red", "green","blue","orange","brown"];
+
+new Chart("myChart", {
+  type: "bar",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+  options: {
+    legend: {display: false},
+    title: {
+      display: true,
+      text: "Today's Shot Data"
+    }
+  }
+});
+</script>
+
+</body>
+</html>
