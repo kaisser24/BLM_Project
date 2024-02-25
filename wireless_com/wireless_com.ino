@@ -10,14 +10,17 @@ void setup() {
   Serial.flush();
 }
 void loop() {
-  for(int i=0;i<5;i++){
-    Serial.println(dataArray[i]);
+  while(Serial.available()){
+    input = Serial.readStringUntil('\n');
+    if(input == "t" || sizeof(dataArray) != 0){
+      Serial.println("start");
+      for(int i=0;i<5;i++){
+        Serial.println(dataArray[i]);
+      }
+      Serial.println("end");
+    }
+    else{
+      Serial.println("none");
+    }
   }
-  delay(5000);
-  // while(Serial.available()){
-  //   input = Serial.readStringUntil('\n');
-  //   if(input == "t"){
-  //     Serial.println("recieved");
-  //   }
-  // }
 }

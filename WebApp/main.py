@@ -17,11 +17,17 @@ app = Flask(__name__)
 
 #look for com port for Xbee
 
+
 @app.route('/view_data')
 def view_data():
     return render_template('view_data.html')
-
 #read and display message from comPort
+
+@app.route('/get_data')
+def get_data():
+    fetchData = getData()
+    return render_template('get_data.html', fetchData=fetchData)
+
 def getData():
     comPort = None
     try:
@@ -29,21 +35,32 @@ def getData():
         print("com port established")
     except Exception as e:
         print("Error: ", e)
-        return
-    # user_in = "t" + "\n"
-    # comPort.write(user_in.encode())
-    while True: 
-        if comPort is not None:
-            print("made it here")
-            msg = comPort.readline()
-            if(msg != ""):
-                msg = str(msg)
-                msg = msg.strip("b'\r\n")
-                print("From Arduino: " + msg)
+        return None
+    # Send a signal to the Arduino to start transmission
+    comPort.write(b't')
+    data_list = []
+    while True:
+        msg = comPort.readline().strip().decode()
+        if msg:
+            # 'start' indicates the arduino has data 
+            if msg == "start":
+                # read in data stored in arduino 
+                while True:
+                    msg = comPort.readline().strip().decode()
+                    if msg == "end":
+                        break
+                    data_list.append(msg)
+                    print("From Arduino: " + msg)
+                break
+            # 'none' indicates arduino does not have stored data
+            elif msg == 'none':
+                print("No data stored in Arduino")
+                break
+
+    return data_list
 
 if __name__ == '__main__':
     #db.create_all()
-    getData()
-    #app.run()
+    app.run()
     
 
