@@ -30,6 +30,8 @@ def getData():
     except Exception as e:
         print("Error: ", e)
         return
+    # user_in = "t" + "\n"
+    # comPort.write(user_in.encode())
     while True: 
         if comPort is not None:
             print("made it here")
@@ -38,8 +40,6 @@ def getData():
                 msg = str(msg)
                 msg = msg.strip("b'\r\n")
                 print("From Arduino: " + msg)
-            else:
-                getData()
 
 if __name__ == '__main__':
     #db.create_all()
