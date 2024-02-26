@@ -15,7 +15,6 @@ app = Flask(__name__)
 # login_manager = LoginManager(app)
 # login_manager.init_app(app)
 
-#look for com port for Xbee
 
 @app.route('/')
 def home():
@@ -51,6 +50,7 @@ def getData():
     comPort.write(b't')
     data_list = []
     while True:
+        #receieve initial arduino message
         msg = comPort.readline().strip().decode()
         if msg:
             # 'start' indicates the arduino has data
