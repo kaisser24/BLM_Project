@@ -17,6 +17,17 @@ app = Flask(__name__)
 
 #look for com port for Xbee
 
+@app.route('/')
+def home():
+    return render_template('home.html')
+
+@app.route('/create_user')
+def create_user():
+    return render_template('create_user.html')
+
+@app.route('/manage_users')
+def manage_users():
+    return render_template('manage_users.html')
 
 @app.route('/view_data')
 def view_data():
@@ -42,9 +53,9 @@ def getData():
     while True:
         msg = comPort.readline().strip().decode()
         if msg:
-            # 'start' indicates the arduino has data 
+            # 'start' indicates the arduino has data
             if msg == "start":
-                # read in data stored in arduino 
+                # read in data stored in arduino
                 while True:
                     msg = comPort.readline().strip().decode()
                     if msg == "end":
@@ -62,5 +73,5 @@ def getData():
 if __name__ == '__main__':
     #db.create_all()
     app.run()
-    
+
 

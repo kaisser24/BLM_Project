@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="../static/script.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>{% block title %} {% endblock %}</title>
+</head>
+
+<body>
+    <nav>
+        <ul>
+            {% if current_user.is_authenticated %}
+                <div class="welcome-username">
+                    <p>Welcome {{ current_user.name }}!</p>
+                </div>
+                <li><a {% if active_page == 'home' %}class="active"{% endif %} href="/">Home</a></li>
+                <li><a {% if active_page == 'create_shoe' %}class="active"{% endif %} href="/create_shoe">Create</a></li>
+                <li><a {% if active_page == 'view_shoes' %}class="active"{% endif %} href="/read">Read</a></li>
+                <li><a {% if active_page == 'logout' %}class="active"{% endif %} href="/logout">Logout</a></li>
+            {% else %}
+                <li><a {% if active_page == 'home' %}class="active"{% endif %} href="/">Home</a></li>
+                <li><a {% if active_page == 'create_user' %}class="active"{% endif %} href="/create_user">Create User</a></li>
+                <li><a {% if active_page == 'login' %}class="active"{% endif %} href="/login">Login</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>
