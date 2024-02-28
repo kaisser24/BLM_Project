@@ -1,20 +1,27 @@
 from flask import *
 from digi.xbee.devices import XBeeDevice
 import serial
-# from flask_sqlalchemy import *
+from flask_sqlalchemy import *
 # from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
 
 app = Flask(__name__)
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///shoedatabase.sqlite'
-# db = SQLAlchemy(app)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.sqlite'
+db = SQLAlchemy(app)
 
-# app.app_context().push()
+app.app_context().push()
 
 
-# app.config['SECRET_KEY'] = 'whatAnAmazingSecretKey!!'
+app.config['SECRET_KEY'] = 'whatAnAmazingSecretKey!!'
 # login_manager = LoginManager(app)
 # login_manager.init_app(app)
 
+class Shot(db.Model):
+    shot_id = db.Column(db.Integer, primary_key=True)
+    time_stamp = db.Column(db.String(20), nullable=False)
+    dec_level = db.Column(db.Float, nullable=False)
+
+
+#look for com port for Xbee
 
 @app.route('/')
 def home():
@@ -30,7 +37,13 @@ def manage_users():
 
 @app.route('/view_data')
 def view_data():
-    return render_template('view_data.html')
+    shots = db.session.query(Shot).all()
+
+    if request.method == 'POST':
+        date = request.form['date']
+        shots = Shot.query.filter_by(date=date).all()
+
+    return render_template('view_data.html', shots=shots)
 #read and display message from comPort
 
 @app.route('/get_data')
@@ -50,7 +63,6 @@ def getData():
     comPort.write(b't')
     data_list = []
     while True:
-        #receieve initial arduino message
         msg = comPort.readline().strip().decode()
         if msg:
             # 'start' indicates the arduino has data

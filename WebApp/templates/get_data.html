@@ -1,9 +1,9 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <h1>Get Data</h1>
-    </head>
-    <body>
+{% extends 'base.html' %}
+{% set active_page = "get_data" %}
+{% block title %}Get Data{% endblock %}
+
+{% block content %}
+<body>
         <h2>Data Recieved</h2>
         {% if fetchData %}
         <ul>
@@ -15,4 +15,4 @@
             <p>No data Recieved</p>
         {% endif %}
     </body>
-</html>
+{% endblock %}
