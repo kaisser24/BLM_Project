@@ -41,7 +41,7 @@ def get_data():
 def getData():
     comPort = None
     try:
-        comPort = serial.Serial("COM4", 9600)
+        comPort = serial.Serial("COM5", 9600)
         print("com port established")
     except Exception as e:
         print("Error: ", e)
