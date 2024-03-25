@@ -28,8 +28,10 @@
                     <td>{{ shot.dec_level }}</td>
                 </tr>
             {% endfor %}
-            <button
         </table>
+        <form method="POST" action="/export/">
+            <button name="exportBtn" type="submit">Export CSV</button>
+        </form>
     </body>
 {% endblock %}
 

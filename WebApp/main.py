@@ -39,14 +39,12 @@ def manage_users():
 @app.route('/view_data')
 def view_data():
     shots = db.session.query(Shot).all()
-    create_csv("test", shots)
     if request.method == 'POST':
         date = request.form['date']
         shots = Shot.query.filter_by(date=date).all()
 
     return render_template('view_data.html', shots=shots)
 #read and display message from comPort
-
 
 @app.route('/get_data')
 def get_data():
@@ -91,11 +89,7 @@ def create_csv(filename, data):
         writer = csv.writer(f)
         writer.writerow(headers)
         for shot in data:
-<<<<<<< Updated upstream
-            row = [shot.shot_id, shot.time_stamp, shot.dec_level]
-=======
-            row = [shot.shot_id, shot.date, shot.time_stamp, shot.dec_level] 
->>>>>>> Stashed changes
+            row = [shot.shot_id, shot.date, shot.time_stamp, shot.dec_level]
             writer.writerow(row)
 
 
