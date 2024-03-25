@@ -8,7 +8,7 @@
 
     <body>
         <br>
-        <form method="POST">
+        <form method="POST" action="/view_data">
             <input type="date" id="date" name="date">
             <input type="submit" value="Submit">
         </form>
@@ -16,16 +16,19 @@
         <table>
             <tr>
                 <th>ID</th>
+                <th>Date</th>
                 <th>Timestamp</th>
                 <th>Decibel Level</th>
             </tr>
             {% for shot in shots %}
                 <tr>
                     <td>{{ shot.shot_id }}</td>
+                    <td>{{ shot.date }}</td>
                     <td>{{ shot.time_stamp }}</td>
                     <td>{{ shot.dec_level }}</td>
                 </tr>
             {% endfor %}
+            <button
         </table>
     </body>
 {% endblock %}

@@ -17,6 +17,7 @@ app.config['SECRET_KEY'] = 'whatAnAmazingSecretKey!!'
 
 class Shot(db.Model):
     shot_id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.String(20), nullable=False)
     time_stamp = db.Column(db.String(20), nullable=False)
     dec_level = db.Column(db.Float, nullable=False)
 
@@ -90,7 +91,7 @@ def create_csv(filename, data):
         writer = csv.writer(f)
         writer.writerow(headers)
         for shot in data:
-            row = [shot.shot_id, shot.time_stamp, shot.dec_level] 
+            row = [shot.shot_id, shot.time_stamp, shot.dec_level]
             writer.writerow(row)
 
 
