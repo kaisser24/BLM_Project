@@ -2,6 +2,7 @@ from flask import *
 from digi.xbee.devices import XBeeDevice
 import serial
 from flask_sqlalchemy import *
+import csv
 # from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
 
 app = Flask(__name__)
@@ -9,7 +10,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.sqlite'
 db = SQLAlchemy(app)
 
 app.app_context().push()
-
 
 app.config['SECRET_KEY'] = 'whatAnAmazingSecretKey!!'
 # login_manager = LoginManager(app)
@@ -46,6 +46,7 @@ def view_data():
     return render_template('view_data.html', shots=shots)
 #read and display message from comPort
 
+
 @app.route('/get_data')
 def get_data():
     fetchData = getData()
@@ -81,6 +82,16 @@ def getData():
                 break
 
     return data_list
+
+def create_csv(filename, data):
+    headers = ['shot id', 'time stamp', 'decible level']
+    filename = filename + '.csv'
+    with open(filename, 'w', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow(headers)
+        for row in data:
+            writer.writerow(data)
+
 
 if __name__ == '__main__':
     #db.create_all()
