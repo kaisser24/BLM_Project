@@ -85,13 +85,17 @@ def getData():
     return data_list
 
 def create_csv(filename, data):
-    headers = ['shot id', 'time stamp', 'decible level']
+    headers = ['shot id', "date", 'time stamp', 'decible level']
     filename = filename + '.csv'
     with open(filename, 'w', newline='') as f:
         writer = csv.writer(f)
         writer.writerow(headers)
         for shot in data:
+<<<<<<< Updated upstream
             row = [shot.shot_id, shot.time_stamp, shot.dec_level]
+=======
+            row = [shot.shot_id, shot.date, shot.time_stamp, shot.dec_level] 
+>>>>>>> Stashed changes
             writer.writerow(row)
 
 
