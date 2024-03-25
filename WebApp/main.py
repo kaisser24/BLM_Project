@@ -44,11 +44,14 @@ def view_data():
         shots = Shot.query.filter_by(date=date).all()
 
     return render_template('view_data.html', shots=shots)
+
+
 @app.route("/export/", methods=["POST"])
 def export_csv():
     shots = db.session.query(Shot).all()
     create_csv("test", shots)
-    redirect("/view_data")
+    return redirect("/view_data")
+
 #read and display message from comPort
 
 @app.route('/get_data')
