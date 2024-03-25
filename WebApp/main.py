@@ -49,7 +49,8 @@ def view_data():
 @app.route("/export/", methods=["POST"])
 def export_csv():
     shots = db.session.query(Shot).all()
-    create_csv("test", shots)
+    fileName = shots[0].date
+    create_csv(fileName, shots)
     return redirect("/view_data")
 
 #read and display message from comPort
