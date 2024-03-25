@@ -38,7 +38,7 @@ def manage_users():
 @app.route('/view_data')
 def view_data():
     shots = db.session.query(Shot).all()
-
+    create_csv("test", shots)
     if request.method == 'POST':
         date = request.form['date']
         shots = Shot.query.filter_by(date=date).all()
@@ -89,8 +89,9 @@ def create_csv(filename, data):
     with open(filename, 'w', newline='') as f:
         writer = csv.writer(f)
         writer.writerow(headers)
-        for row in data:
-            writer.writerow(data)
+        for shot in data:
+            row = [shot.shot_id, shot.time_stamp, shot.dec_level] 
+            writer.writerow(row)
 
 
 if __name__ == '__main__':
